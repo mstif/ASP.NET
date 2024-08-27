@@ -36,7 +36,7 @@ namespace ReferenceInfo.WebHost.Controllers
         public async Task<ActionResult<List<PreferenceResponse>>> GetPreferencesAsync()
         {
 
-            var cacheData = _cacheService.GetData<IEnumerable<Preference>>("preferences");
+            var cacheData = _cacheService.GetData<IEnumerable<Preference>>("preferences");//ключ для получения всей коллекции
             if (cacheData != null)
             {
                 var resFromCache = cacheData.ToList();
@@ -47,7 +47,7 @@ namespace ReferenceInfo.WebHost.Controllers
             var preferences = await _preferencesRepository.GetAllAsync();
             var expirationTime = DateTimeOffset.Now.AddMinutes(5.0);
             cacheData = preferences;
-            _cacheService.SetData<IEnumerable<Preference>>("preferences", cacheData, expirationTime);
+            _cacheService.SetData<IEnumerable<Preference>>("preferences", cacheData, expirationTime); 
 
             var response = preferences.Select(x => new PreferenceResponse()
             {
@@ -62,7 +62,7 @@ namespace ReferenceInfo.WebHost.Controllers
         public async Task<ActionResult<List<PreferenceResponse>>> GetPreferenceByIdAsync(Guid id)
         {
 
-            var cacheData = _cacheService.GetData<Preference>($"preference-{id}");
+            var cacheData = _cacheService.GetData<Preference>($"preference-{id}"); // для скорости работы сделал для каждого предпочтения отдельный ключ
             if (cacheData != null)
             {
                 return Ok(cacheData);
