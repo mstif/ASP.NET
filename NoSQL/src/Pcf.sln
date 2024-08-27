@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pcf.ReceivingFromPartner.We
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pcf.Administration.IntegrationTests", "Pcf.Administration\Pcf.Administration.IntegrationTests\Pcf.Administration.IntegrationTests.csproj", "{38F1FFB6-5EBF-4EDF-B74E-AF29B0F1ABF7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Referencies", "Referencies", "{891B4E80-E74F-47C0-9CD9-2001AA37AF56}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "References", "References", "{891B4E80-E74F-47C0-9CD9-2001AA37AF56}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReferenceInfo.WebHost", "Pcf.ReferenceInfo\ReferenceInfo\ReferenceInfo.WebHost.csproj", "{913C8504-FBC9-42CD-8397-BCEDCC55BCA5}"
 EndProject
