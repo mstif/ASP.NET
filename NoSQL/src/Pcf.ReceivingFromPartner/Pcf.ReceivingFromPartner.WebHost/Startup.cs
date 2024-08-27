@@ -48,7 +48,12 @@ namespace Pcf.ReceivingFromPartner.WebHost
             {
                 c.BaseAddress = new Uri(Configuration["IntegrationSettings:AdministrationApiUrl"]);
             });
-            
+            services.AddHttpClient<IReferenceGateway, ReferenceGateway>(c =>
+            {
+                c.BaseAddress = new Uri(Configuration["IntegrationSettings:ReferenceApiUrl"]);
+            });
+
+
             services.AddDbContext<DataContext>(x =>
             {
                 //x.UseSqlite("Filename=PromocodeFactoryReceivingFromPartnerDb.sqlite");

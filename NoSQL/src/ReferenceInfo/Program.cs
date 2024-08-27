@@ -1,4 +1,5 @@
 
+using GMS.Identity.WebHost.Cache;
 using Microsoft.EntityFrameworkCore;
 using ReferenceInfoCore.Repositories;
 using ReferenceInfoDataAccess;
@@ -13,6 +14,7 @@ namespace ReferenceInfo
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddScoped<ICacheService, CacheService>();
             builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             //builder.services.AddScoped<INotificationGateway, NotificationGateway>();
             builder.Services.AddScoped<IDbInitializer, EfDbInitializer>();

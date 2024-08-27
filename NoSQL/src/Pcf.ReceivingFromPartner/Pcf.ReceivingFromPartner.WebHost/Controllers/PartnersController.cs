@@ -24,18 +24,21 @@ using Microsoft.AspNetCore.Mvc;
         private readonly INotificationGateway _notificationGateway;
         private readonly IGivingPromoCodeToCustomerGateway _givingPromoCodeToCustomerGateway;
         private readonly IAdministrationGateway _administrationGateway;
+        private readonly IReferenceGateway _referenceGateway;
 
         public PartnersController(IRepository<Partner> partnersRepository,
             IRepository<Preference> preferencesRepository, 
             INotificationGateway notificationGateway,
             IGivingPromoCodeToCustomerGateway givingPromoCodeToCustomerGateway,
-            IAdministrationGateway administrationGateway)
+            IAdministrationGateway administrationGateway,
+            IReferenceGateway referenceGateway)
         {
             _partnersRepository = partnersRepository;
             _preferencesRepository = preferencesRepository;
             _notificationGateway = notificationGateway;
             _givingPromoCodeToCustomerGateway = givingPromoCodeToCustomerGateway;
             _administrationGateway = administrationGateway;
+            _referenceGateway = referenceGateway;
         }
 
         /// <summary>
@@ -317,7 +320,8 @@ using Microsoft.AspNetCore.Mvc;
             }
 
             //Получаем предпочтение по имени
-            var preference = await _preferencesRepository.GetByIdAsync(request.PreferenceId);
+            // var preference = await _preferencesRepository.GetByIdAsync(request.PreferenceId);
+            var preference = await _referenceGateway.GetPreferenceByIdAsync(request.PreferenceId);
 
             if (preference == null)
             {
@@ -325,8 +329,11 @@ using Microsoft.AspNetCore.Mvc;
             }
 
             PromoCode promoCode = PromoCodeMapper.MapFromModel(request, preference, partner);
+            promoCode.EndDate = promoCode.EndDate.ToUniversalTime();
+            promoCode.BeginDate = promoCode.BeginDate.ToUniversalTime();
             partner.PromoCodes.Add(promoCode);
             partner.NumberIssuedPromoCodes++;
+   
 
             await _partnersRepository.UpdateAsync(partner);
             

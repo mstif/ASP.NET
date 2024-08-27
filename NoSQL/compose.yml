@@ -63,3 +63,29 @@ services:
       - "ConnectionStrings:PromocodeFactoryGivingToCustomerDb=Host=promocode-factory-giving-to-customer-db;Database=promocode_factory_giving_to_customer_db;Username=postgres;Password=docker"          
     depends_on: 
       - promocode-factory-giving-to-customer-db
+ #ReferenceDb
+  reference-db:
+    image: "postgres:latest"
+    container_name: 'reference-db'
+    restart: always 
+    ports:
+      - 5436:5432
+    environment: 
+      - POSTGRES_PASSWORD=docker
+ # NO SQL DB
+  cache.reddis:
+    image: "redis:7.0.11"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+    container_name: gmsreddis
+    restart: always
+    ports: 
+      - "16379:6379"
+    volumes: 
+      - cache:/data
+volumes:
+  cache:
