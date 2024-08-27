@@ -72,6 +72,17 @@ services:
       - 5436:5432
     environment: 
       - POSTGRES_PASSWORD=docker
+  #ReferenceInfo Api
+  reference-info-api:
+    build: src/
+    container_name: 'reference-info-api'
+    restart: always
+    ports:
+      - "5126:8080"
+    environment:
+      - "ConnectionStrings:ReferenceDb=Host=reference-db;Database=Reference_Db;Username=postgres;Password=docker"          
+    depends_on: 
+      - reference-db
  # NO SQL DB
   cache.reddis:
     image: "redis:7.0.11"
@@ -81,7 +92,7 @@ services:
           memory: 256M
         reservations:
           memory: 128M
-    container_name: gmsreddis
+    container_name: pcfreddis
     restart: always
     ports: 
       - "16379:6379"
